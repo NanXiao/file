@@ -145,3 +145,10 @@ func copyFile(src, dst string) error {
 
 	return nil
 }
+
+// TODO: implement those functions
+func isReadable(mode os.FileMode) bool { return mode&0400 != 0 }
+
+func isWritable(mode os.FileMode) bool { return mode&0200 != 0 }
+
+func isExecutable(mode os.FileMode) bool { return mode&0100 != 0 }
