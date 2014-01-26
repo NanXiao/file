@@ -11,7 +11,7 @@ import (
 )
 
 // Copy copies the file or directory from source path to destination path.
-// Directories are copied recursively
+// Directories are copied recursively. Copy does not handle symlinks currently.
 func Copy(src, dst string) error {
 	if src == dst {
 		return fmt.Errorf("%s and %s are identical (not copied).", src, dst)
@@ -72,6 +72,7 @@ func IsFile(file string) bool {
 	return ok
 }
 
+// IsFileOk checks whether the given file is a directory or not.
 func IsFileOk(file string) (bool, error) {
 	sf, err := os.Open(file)
 	if err != nil {
