@@ -2,7 +2,7 @@
 
 File includes several useful file related helper functions. Especially common
 tasks like copying a file or directory, checking if a file exists, etc. are
-not easy.
+not easy to write in Go.
 
 For usage see examples below or click on the godoc badge.
 
@@ -31,3 +31,7 @@ ok := file.Exists("hello.txt")
 ok := file.IsFile("another.png")
 
 ```
+
+## License
+
+The MIT License (MIT) - see LICENSE.md for more details
