@@ -9,7 +9,7 @@ import (
 
 var (
 	testPath    = "."
-	testPrefix  = "example_"
+	testPrefix  = "test_"
 	exampleFile = "exampleFile"
 	exampleDir  = "exampleDir"
 )
@@ -99,9 +99,10 @@ func TestCopy(t *testing.T) {
 
 	// final layout should bee:
 	// exampleDir/
-	// 	t2/
-	//    f
-	//  testFile
+	//   testDir/
+	//   	t2/
+	//        f
+	//      testFile
 
 	if !Exists(exampleDir) {
 		t.Error("6: exampleDir does not exist")
@@ -111,8 +112,9 @@ func TestCopy(t *testing.T) {
 		t.Error("6: t2 does not exist")
 	}
 
-	if !Exists(filepath.Join(exampleDir, filepath.Base(testFile.Name()))) {
-		t.Error("6: testfile inside exampleDir does not exist")
+	t1 := filepath.Join(exampleDir, testDir, filepath.Base(testFile.Name()))
+	if !Exists(t1) {
+		t.Error("6: testfile inside exampleDir does not exist", t1)
 	}
 
 	if !Exists(filepath.Join(t2, filepath.Base(f.Name()))) {

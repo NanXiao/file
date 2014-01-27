@@ -29,18 +29,21 @@ func Copy(src, dst string) error {
 		return fmt.Errorf("%s is a directory (not copied).", src)
 	}
 
+	srcBase, _ := filepath.Split(src)
 	walks := 0
 
 	// dstPath returns the rewritten destination path for the given source path
-	dstPath := func(path string) string {
+	dstPath := func(srcPath string) string {
+		srcPath = strings.TrimPrefix(srcPath, srcBase)
+
 		// foo/example/hello.txt -> bar/example/hello.txt
 		if walks != 0 {
-			return strings.Replace(path, src, dst, 1)
+			return filepath.Join(dst, srcPath)
 		}
 
 		// hello.txt -> example/hello.txt
 		if Exists(dst) && !IsFile(dst) {
-			return filepath.Join(dst, filepath.Base(path))
+			return filepath.Join(dst, filepath.Base(srcPath))
 		}
 
 		// hello.txt -> test.txt
