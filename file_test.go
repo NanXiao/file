@@ -80,16 +80,42 @@ func TestCopy(t *testing.T) {
 	}
 
 	// 6. dir to dir
+	t2, err := ioutil.TempDir(testDir, testPrefix)
+	if err != nil {
+		t.Error(err)
+	}
+	defer os.RemoveAll(t2)
+
+	f, err := ioutil.TempFile(t2, testPrefix)
+	if err != nil {
+		t.Error(err)
+	}
+	defer os.Remove(f.Name())
+
 	err = Copy(testDir, exampleDir)
 	if err != nil {
 		t.Errorf("6: %s\n", err)
 	}
 
+	// final layout should bee:
+	// exampleDir/
+	// 	t2/
+	//    f
+	//  testFile
+
 	if !Exists(exampleDir) {
 		t.Error("6: exampleDir does not exist")
 	}
 
+	if !Exists(t2) {
+		t.Error("6: t2 does not exist")
+	}
+
 	if !Exists(filepath.Join(exampleDir, filepath.Base(testFile.Name()))) {
-		t.Error("6: exampleFile inside exampleDir does not exist")
+		t.Error("6: testfile inside exampleDir does not exist")
+	}
+
+	if !Exists(filepath.Join(t2, filepath.Base(f.Name()))) {
+		t.Error("6: f file inside exampleDir does not exist")
 	}
 }
