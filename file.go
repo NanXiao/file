@@ -13,6 +13,10 @@ import (
 // Copy copies the file or directory from source path to destination path.
 // Directories are copied recursively. Copy does not handle symlinks currently.
 func Copy(src, dst string) error {
+	if dst == "." {
+		dst = filepath.Base(src)
+	}
+
 	if src == dst {
 		return fmt.Errorf("%s and %s are identical (not copied).", src, dst)
 	}
