@@ -117,7 +117,7 @@ func Exists(file string) bool {
 func ExistsOk(file string) (bool, error) {
 	_, err := os.Stat(file)
 	if err == nil {
-		return true, nil // file exist
+		return true, nil // file exists
 	}
 
 	if os.IsNotExist(err) {
